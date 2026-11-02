@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - Student Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      
+      <!-- Brand Header -->
+      <div class="auth-header">
+        <div class="auth-logo">🎓</div>
+        <h1 class="auth-title">EduManage Portal</h1>
+        <p class="auth-subtitle">Student Record & Academic Administration</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tab-login-btn">Admin Login</button>
+        <button type="button" class="auth-tab-btn" id="tab-register-btn">Register First Admin</button>
+      </div>
+
+      <!-- Auth Card Body -->
+      <div class="auth-body">
+
+        <!-- 1. LOGIN FORM -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="login-email" 
+              class="form-control" 
+              placeholder="admin@university.edu" 
+              required 
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="login-password" 
+              class="form-control" 
+              placeholder="••••••••" 
+              required 
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit">
+            Sign In to Dashboard
+          </button>
+        </form>
+
+        <!-- 2. REGISTRATION FORM (Hidden by default) -->
+        <form id="register-form" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Admin Full Name <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="reg-name" 
+              class="form-control" 
+              placeholder="Prof. Jane Doe" 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="reg-email" 
+              class="form-control" 
+              placeholder="admin@university.edu" 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Create Password <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="reg-password" 
+              class="form-control" 
+              placeholder="Minimum 6 characters" 
+              minlength="6" 
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="btn-reg-submit">
+            Create Admin Account
+          </button>
+        </form>
+
+        <!-- Contextual Help -->
+        <div style="margin-top: 20px; text-align: center; font-size: 12px; color: var(--text-muted);">
+          <p id="auth-help-text">First time setup? Click <strong>Register First Admin</strong> to create your credentials.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Container -->
+  <div class="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

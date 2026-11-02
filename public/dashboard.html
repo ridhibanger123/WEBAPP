@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Student Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">🎓</div>
+        <div class="sidebar-brand-text">
+          EduManage
+          <small>University Portal</small>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-link active" id="nav-dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#students-section" class="nav-link" id="nav-students">
+          <span class="nav-icon">👨‍🎓</span>
+          <span>Students Directory</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-info">
+          <div class="admin-avatar" id="admin-avatar-char">A</div>
+          <div class="admin-details">
+            <div class="admin-name" id="sidebar-admin-name">Administrator</div>
+            <div class="admin-role" id="sidebar-admin-email">admin@portal.edu</div>
+          </div>
+        </div>
+        <button type="button" class="btn-logout" id="btn-sidebar-logout" title="Sign Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN WRAPPER ================= -->
+    <div class="main-wrapper">
+
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>Student Management Dashboard</h1>
+          <p>Real-time analytics and student records powered by MongoDB</p>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="date-pill" id="current-date-badge">Today</div>
+          <button type="button" class="btn btn-primary" id="btn-open-add-modal">
+            <span>➕</span> Add New Student
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-topbar-logout">
+            Sign Out
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="content">
+
+        <!-- ================= 1. STATISTIC CARDS ================= -->
+        <section class="stats-grid" id="overview">
+          
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Total Students</span>
+              <span class="stat-value" id="stat-total">0</span>
+            </div>
+            <div class="stat-icon blue">👥</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Active Students</span>
+              <span class="stat-value" id="stat-active" style="color: var(--success);">0</span>
+            </div>
+            <div class="stat-icon green">✅</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Inactive Students</span>
+              <span class="stat-value" id="stat-inactive" style="color: var(--danger);">0</span>
+            </div>
+            <div class="stat-icon amber">⏸️</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Departments</span>
+              <span class="stat-value" id="stat-depts" style="color: var(--accent-purple);">0</span>
+            </div>
+            <div class="stat-icon purple">🏛️</div>
+          </div>
+
+        </section>
+
+        <!-- ================= 2. STUDENTS TABLE SECTION ================= -->
+        <section class="table-card" id="students-section">
+          
+          <div class="table-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h2 class="table-title">Student Records</h2>
+              <span class="badge badge-dept" id="badge-record-count">0 Records</span>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="toolbar">
+            
+            <!-- Live Search -->
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input 
+                type="text" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="Search by student name or ID..."
+              >
+            </div>
+
+            <!-- Department Filter -->
+            <select id="filter-department" class="filter-select">
+              <option value="All">All Departments</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Electronics & Communication">Electronics & Communication</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Business Administration">Business Administration</option>
+            </select>
+
+            <!-- Academic Year Filter -->
+            <select id="filter-year" class="filter-select">
+              <option value="All">All Academic Years</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+
+            <!-- Status Filter -->
+            <select id="filter-status" class="filter-select">
+              <option value="All">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+
+            <!-- Reset Filters -->
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-reset-filters">
+              Reset
+            </button>
+
+          </div>
+
+          <!-- Table Wrapper -->
+          <div class="table-responsive">
+            <table class="custom-table" id="students-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Student Name</th>
+                  <th>Department & Course</th>
+                  <th>Academic Year</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="students-table-body">
+                <!-- Dynamically injected via JavaScript -->
+              </tbody>
+            </table>
+
+            <!-- Loading Spinner State -->
+            <div id="table-loading" class="state-container" style="display: none;">
+              <div class="spinner"></div>
+              <p>Fetching records from MongoDB Atlas...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="table-empty" class="state-container" style="display: none;">
+              <div class="state-icon">📂</div>
+              <div class="state-title">No Students Found</div>
+              <p class="state-desc">There are no records matching your search or filter criteria. Click "Add New Student" to enroll one.</p>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- ================= 3. ADD / EDIT STUDENT MODAL ================= -->
+  <div class="modal-overlay" id="modal-student-form">
+    <div class="modal-dialog">
+      
+      <div class="modal-header">
+        <h3 class="modal-title" id="form-modal-title">Add New Student</h3>
+        <button type="button" class="modal-close" id="btn-close-form-modal">&times;</button>
+      </div>
+
+      <form id="student-form">
+        <!-- Hidden input storing MongoDB _id when editing -->
+        <input type="hidden" id="student-doc-id">
+
+        <div class="modal-body">
+          
+          <div class="form-grid-2">
+            <!-- Student ID -->
+            <div class="form-group">
+              <label class="form-label" for="inp-student-id">Student ID <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="inp-student-id" 
+                class="form-control" 
+                placeholder="e.g. STU-2024-001" 
+                required
+              >
+            </div>
+
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="inp-full-name">Full Name <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="inp-full-name" 
+                class="form-control" 
+                placeholder="e.g. Alex Johnson" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="inp-email">Email Address <span class="required">*</span></label>
+              <input 
+                type="email" 
+                id="inp-email" 
+                class="form-control" 
+                placeholder="alex.johnson@university.edu" 
+                required
+              >
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+              <label class="form-label" for="inp-phone">Phone Number <span class="required">*</span></label>
+              <input 
+                type="tel" 
+                id="inp-phone" 
+                class="form-control" 
+                placeholder="+1 (555) 019-2834" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <!-- Department -->
+            <div class="form-group">
+              <label class="form-label" for="inp-department">Department <span class="required">*</span></label>
+              <select id="inp-department" class="form-control" required>
+                <option value="" disabled selected>Select Department</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Communication">Electronics & Communication</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Business Administration">Business Administration</option>
+              </select>
+            </div>
+
+            <!-- Course -->
+            <div class="form-group">
+              <label class="form-label" for="inp-course">Course / Degree <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="inp-course" 
+                class="form-control" 
+                placeholder="e.g. B.Tech Computer Science" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <!-- Academic Year -->
+            <div class="form-group">
+              <label class="form-label" for="inp-year">Academic Year <span class="required">*</span></label>
+              <select id="inp-year" class="form-control" required>
+                <option value="" disabled selected>Select Year</option>
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+              </select>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+              <label class="form-label" for="inp-dob">Date of Birth <span class="required">*</span></label>
+              <input 
+                type="date" 
+                id="inp-dob" 
+                class="form-control" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <!-- Gender -->
+            <div class="form-group">
+              <label class="form-label" for="inp-gender">Gender <span class="required">*</span></label>
+              <select id="inp-gender" class="form-control" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Status -->
+            <div class="form-group">
+              <label class="form-label" for="inp-status">Status <span class="required">*</span></label>
+              <select id="inp-status" class="form-control" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <!-- Enrollment Date -->
+            <div class="form-group">
+              <label class="form-label" for="inp-enrollment">Enrollment Date</label>
+              <input 
+                type="date" 
+                id="inp-enrollment" 
+                class="form-control"
+              >
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="form-group">
+            <label class="form-label" for="inp-address">Address <span class="required">*</span></label>
+            <textarea 
+              id="inp-address" 
+              class="form-control" 
+              placeholder="e.g. 104 Campus Avenue, University Hall, Room 3B" 
+              required
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-form-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-student">
+            Save Student
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= 4. STUDENT DETAILS MODAL ================= -->
+  <div class="modal-overlay" id="modal-student-details">
+    <div class="modal-dialog">
+      
+      <div class="modal-header">
+        <h3 class="modal-title">Student Profile</h3>
+        <button type="button" class="modal-close" id="btn-close-details-modal">&times;</button>
+      </div>
+
+      <div class="modal-body" id="details-modal-content">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-close-details-footer">Close</button>
+        <button type="button" class="btn btn-primary" id="btn-details-edit-shortcut">Edit Record</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 5. DELETE CONFIRMATION MODAL ================= -->
+  <div class="modal-overlay" id="modal-delete-confirm">
+    <div class="modal-dialog modal-sm">
+      
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Confirm Student Deletion</h3>
+        <button type="button" class="modal-close" id="btn-close-delete-modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 14px; margin-bottom: 12px; color: var(--text-main);">
+          Are you sure you want to permanently delete this student record?
+        </p>
+        <div style="background: var(--bg-app); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--danger);">
+          <strong id="delete-student-name">Student Name</strong>
+          <div id="delete-student-id" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">ID: STU-XXXX</div>
+        </div>
+        <p style="font-size: 12px; color: var(--danger); margin-top: 12px;">
+          ⚠️ This action cannot be undone and will delete the record from MongoDB Atlas.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-delete">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-delete">Delete Permanently</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container"></div>
+
+  <!-- Client-side Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
